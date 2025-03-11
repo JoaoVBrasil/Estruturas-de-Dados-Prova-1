@@ -56,13 +56,24 @@ void LinkedList<T>::print() const {
     std::cout << atual->value << " -> ";
     atual = atual->next;
   }
-  std::cout << "NULL\n";
+  std::cout << "null\n";
 }
 
 // O( 1 ) Constante
-template <class T>
-void LinkedList<T>::pop_front() {}
+template<class T>
+void LinkedList<T>::pop_front() {
+    if (empty()) {
+        throw std::out_of_range("Lista vazia");
+    }
 
+    Node* old_head = head; 
+    head = head->next;    
+
+    old_head->next = nullptr; 
+    delete old_head;   
+
+    _size--; 
+}
 // O( n ) Linear
 template <class T>
 void LinkedList<T>::remove(size_t index) {
@@ -82,7 +93,7 @@ void LinkedList<T>::remove(size_t index) {
     pos = pos->next;
   }
 
-  prev->next = pos->next;
+  prev->next = pos-> next;
 
   pos->next = nullptr;
   delete pos;
